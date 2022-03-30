@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<project name="Ganz&#250;a" default="all" basedir=".">
+
+ <description>Buildfile for the cryptanalysis programs.</description>
+
+ <property name="src" value="src" />
+ <property name="basePkgName" value="net.sourceforge.ganzua" />
+ <property name="basePkgDir" value="net/sourceforge/ganzua" />
+ <property name="build" value="build" />
+ <property name="docs" value="docs" />
+ <property name="langFreqJAR" value="langFreq.jar" />
+ <property name="ganzuaJAR" value="ganzua.jar" />
+ <property name="schemaDir" value="schemata" />
+ <property name="freqDir" value="frequencies" />
+
+ <target name="all" depends="pack,cleanBytecode" 
+         description="Builds all the programs and puts them in JAR files">
+ </target>
+
+ <target name="mac"
+         description="Builds all the programs with Mac extensions and makes &#10;
+               an application bundle. Note that you need Mac OS X and its &#10;
+               Java development tools to run this target.">
+  <condition property="isMacOSX">
+   <and>
+    <os family="mac"/>
+    <os family="unix"/>
+   </and>
+  </condition>
+  <antcall target="checkMac" />
+  <antcall target="bundleMac" />
+ </target>
+
+ <target name="init">
+  <mkdir dir="${build}"/>
+ </target>
+
+ <target name="compile" depends="init">
+  <!-- Generates the bytecode in the build/ directory" -->
+  <javac srcdir="${src}" destdir="${build}" encoding="UTF-8" source="1.4"
+         optimize="on" />
+ </target>
+
+ <target name="pack" depends="compile">
+  <antcall target="makeConfigFile" />
+  <copy todir="${build}">
+   <fileset dir="${src}">
+    <include name="**/*.properties" />
+    <include name="**/*.png" />
+    <exclude name="${basePkgDir}/config.properties" />
+   </fileset>
+  </copy>
+  <jar destFile="${langFreqJAR}" basedir="${build}" index="true"
+    includes="${basePkgDir}/config.properties" >
+   <include name="${basePkgDir}/LangFreq.class" />
+   <include name="${basePkgDir}/AnalyzerConstants.class" />
+   <include name="${basePkgDir}/text/StringFreq.class" />
+   <include name="${basePkgDir}/text/StringFreqCollationKeyComparator.class" />
+   <include name="${basePkgDir}/exception/LangFreqException.class" />
+   <include name="${basePkgDir}/handler/AlphabetRulesHandler.class" />
+   <manifest>
+    <attribute name="Main-Class" value="${basePkgName}.LangFreq" />
+   </manifest>
+  </jar>
+  <jar destFile="${ganzuaJAR}" basedir="${build}" index="true"
+       includes="**/*.class **/*.properties **/*.png">
+   <exclude name="${basePkgDir}/LangFreq.class" />
+   <exclude name="${basePkgDir}/exception/LangFreqException.class" />
+   <exclude name="${basePkgDir}/handler/AlphabetRulesHandler.class" />
+   <manifest>
+    <attribute name="Main-Class" value="${basePkgName}.Analyzer" />
+   </manifest>
+  </jar>
+ </target>
+
+ <target name="checkMac" unless="isMacOSX">
+  <fail message="The operating system is not Mac OS X" />
+ </target>
+
+ <target name="compileMac" if="isMacOSX">
+  <copy file="${src}/${basePkgDir}/AnalyzerMac.java.mac"
+        tofile="${src}/${basePkgDir}/AnalyzerMac.java" />
+  <antcall target="compile" />
+  <delete verbose="false" file="${src}/${basePkgDir}/AnalyzerMac.java" />
+ </target>
+
+ <target name="packMac" if="isMacOSX" depends="compileMac">
+  <antcall target="makeConfigFile" />
+  <copy todir="${build}">
+   <fileset dir="${src}">
+    <include name="**/*.properties" />
+    <include name="**/*.png" />
+    <exclude name="${basePkgDir}/config.properties" />
+   </fileset>
+  </copy>
+  <jar destFile="${langFreqJAR}" basedir="${build}" index="true"
+    includes="${basePkgDir}/config.properties" >
+   <include name="${basePkgDir}/LangFreq.class" />
+   <include name="${basePkgDir}/AnalyzerConstants.class" />
+   <include name="${basePkgDir}/text/StringFreq.class" />
+   <include name="${basePkgDir}/text/StringFreqCollationKeyComparator.class" />
+   <include name="${basePkgDir}/exception/LangFreqException.class" />
+   <include name="${basePkgDir}/handler/AlphabetRulesHandler.class" />
+   <manifest>
+    <attribute name="Main-Class" value="${basePkgName}.LangFreq" />
+   </manifest>
+  </jar>
+  <jar destFile="${ganzuaJAR}" basedir="${build}" index="true"
+       includes="**/*.class **/*.properties **/*.png">
+   <exclude name="${basePkgDir}/LangFreq.class" />
+   <exclude name="${basePkgDir}/exception/LangFreqException.class" />
+   <exclude name="${basePkgDir}/handler/AlphabetRulesHandler.class" />
+   <manifest>
+    <attribute name="Main-Class" value="${basePkgName}.AnalyzerMac" />
+   </manifest>
+  </jar>
+ </target>
+
+ <target name="bundleMac" if="isMacOSX" depends="packMac,cleanBytecode">
+  <mkdir dir="Ganz&#250;a.app/Contents/MacOS" />
+  <mkdir dir="Ganz&#250;a.app/Contents/Resources/Java" />
+  <mkdir dir="Ganz&#250;a.app/Contents/Resources/English.lproj" />
+  <mkdir dir="Ganz&#250;a.app/Contents/Resources/Spanish.lproj" />
+  <copy todir="Ganz&#250;a.app/Contents">
+   <fileset dir="${src}/${basePkgDir}/macFiles">
+    <include name="Info.plist" />
+    <include name="PkgInfo" />
+   </fileset>
+  </copy>
+  <copy file="${src}/${basePkgDir}/macFiles/ganzua.icns"
+        todir="Ganz&#250;a.app/Contents/Resources" />
+  <copy file="/System/Library/Frameworks/JavaVM.framework/Versions/Current/Resources/MacOS/JavaApplicationStub"
+        todir="Ganz&#250;a.app/Contents/MacOS" />
+  <chmod file="Ganz&#250;a.app/Contents/MacOS/JavaApplicationStub"
+         perm="ugo+rx" />
+  <move file="${ganzuaJAR}" todir="Ganz&#250;a.app/Contents/Resources/Java" />
+  <exec dir="Ganz&#250;a.app/Contents/Resources/Java" executable="ln">
+   <arg line="-s" />
+   <arg value="../../../../frequencies" />
+   <arg value="frequencies" />
+  </exec>
+  <exec dir="Ganz&#250;a.app/Contents/Resources/Java" executable="ln">
+   <arg line="-s" />
+   <arg value="../../../../schemata" />
+   <arg value="schemata" />
+  </exec>
+  <!-- Set the bundle bit Finder attribute -->
+  <exec dir="." executable="/Developer/Tools/SetFile">
+   <arg line="-a B" />
+   <arg value="Ganz&#250;a.app" />
+  </exec>
+ </target>
+
+ <target name="makeConfigFile">
+  <!-- Creates a config.properties file in ${build}/${basePkgDir}/ -->
+  <antcall target="makeConfigNoInstall" />
+  <antcall target="makeConfigInstall" />
+ </target>
+
+ <target name="makeConfigNoInstall" unless="installTo">
+   <!-- Writes a config properties file named config.properties where all the
+        properties have been commented out -->
+   <propertyfile file="${build}/${basePkgDir}/config.properties" 
+                 comment=" Used to find the XML schemata and language frequencies files.&#10;# All of the entries have been commented out&#10;&#10;# rootDir specifies the absolute path to the directory the program&#10;# is installed to&#10;#rootDir = /usr/local/share/ganzua/&#10;&#10;# schemataDir specifies the absolute path to the directory that contains&#10;# the schemata. May be left unspecified if that directory is a&#10;# subdirectory of rootDir named schemata&#10;#schemataDir = /usr/local/share/ganzua/schemata/&#10;&#10;# langFreqDir specifies the absolute path to the directory that contains&#10;# the language frecuencies documents. May be left unspecified if that directory&#10;# is a subdirectory of rootDir named frequencies&#10;#langFreqDir = /usr/local/share/ganzua/frequencies/&#10;&#10;">
+  </propertyfile>
+ </target>
+
+ <target name="makeConfigInstall" if="installTo">
+   <!-- Writes a config properties file named config.properties where all the
+        properties but rootDir have been commented out.
+        Note that rootDir's value is set in the comment attribute with a
+        reference to the property installDir (${installDir}) ant not
+	using an <entry/> element. -->
+    <propertyfile file="${build}/${basePkgDir}/config.properties" 
+                  comment=" Used to find the XML schemata and language frequencies files.&#10;#&#10;# rootDir specifies the absolute path to the directory the program&#10;# is installed to&#10;rootDir = ${installDir}&#10;&#10;# schemataDir specifies the absolute path to the directory that contains&#10;# the schemata. May be left unspecified if that directory is a&#10;# subdirectory of rootDir named schemata&#10;#schemataDir = /usr/local/share/ganzua/schemata/&#10;&#10;# langFreqDir specifies the absolute path to the directory that contains&#10;# the language frecuencies documents. May be left unspecified if that directory&#10;# is a subdirectory of rootDir named frequencies&#10;#langFreqDir = /usr/local/share/ganzua/frequencies/&#10;&#10;">
+   <!--<entry key="rootDir" value="${installDir}"/>-->
+  </propertyfile>
+ </target>
+
+ <target name="install"
+         description="Installs the programs to the specified directory.">
+  <antcall target="installInstructions" />
+  <antcall target="startInstall" />
+ </target>
+
+ <target name="installInstructions" unless="installTo">
+  <echo>You must specify the absolute path of the directory to install to.</echo>
+  <echo>For example, if you want the program to be installed to the</echo>
+  <echo>directory /home/user/programs/thisProgram you should issue</echo>
+  <echo>the following command: &#10; </echo>
+  <echo>    ant install -DinstallTo=/home/user/programs/thisProgram</echo>
+  <fail message="No install directory." />
+ </target>
+
+ <target name="startInstall" depends="compile" if="installTo">
+  <pathconvert dirsep="${file.separator}" 
+               pathsep="${path.separator}" 
+               property="installDir">
+   <path>
+    <pathelement path="${installTo}" />
+   </path>
+  </pathconvert>
+  <antcall target="pack" />
+  <antcall target="cleanBytecode" />
+  <mkdir dir="${installDir}" />
+  <move file="${langFreqJAR}" todir="${installDir}" />
+  <move file="${ganzuaJAR}" todir="${installDir}" />
+  <copy todir="${installDir}">
+   <fileset dir=".">
+    <include name="${schemaDir}/**/*" />
+    <include name="${freqDir}/**/*" />
+   </fileset>
+  </copy>
+ </target>
+
+ <target name="docs"
+         description="Generates the project's documentation using the javadoc tool">
+  <mkdir dir="${docs}" />
+  <javadoc sourcepath="${src}" source="1.4" encoding="UTF-8" charset="UTF-8"
+           docencoding="UTF-8" destdir="${docs}"
+           additionalparam="-breakiterator" author="true" version="true" 
+           private="true" >
+   <fileset dir="${src}">
+    <include name="**/*.java" />
+   </fileset>
+  </javadoc>
+ </target>
+
+ <target name="clean" depends="cleanBytecode, cleanDocs"
+         description="Deletes all the classfiles and documentation">
+ </target>
+
+ <target name="cleanBytecode" 
+         description="Deletes all the classfiles in src/ and all the files in build/">
+  <!-- Create the directory first so the build does not fail if
+       the directory does not exist -->
+  <mkdir dir="${build}"/>
+  <delete verbose="false" includeEmptyDirs="true">
+   <fileset dir="${src}" defaultexcludes="false">
+    <include name="**/*.class" />
+    <include name="**/*.*~" />
+   </fileset>
+   <fileset dir="${build}" defaultexcludes="false">
+    <include name="**/*" />
+   </fileset>
+   <fileset dir="." defaultexcludes="false">
+    <include name="${build}" />
+   </fileset>
+  </delete>
+ </target>
+
+ <target name="cleanDocs" 
+         description="Deletes all the files in docs/">
+  <!-- Create the directory first so the build does not fail if
+       the directory does not exist -->
+  <mkdir dir="${docs}" />
+  <delete verbose="false" includeEmptyDirs="true">
+   <fileset dir="${docs}" defaultexcludes="false">
+    <include name="**/*" />
+   </fileset>
+   <fileset dir=".">
+    <include name="${docs}" />
+   </fileset>
+  </delete>
+ </target>
+
+</project>

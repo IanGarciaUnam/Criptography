@@ -1,0 +1,138 @@
+/*
+ * -- AnalyzerMac.java.mac --
+ *
+ * Version       Changes
+ * 0.01          First implementation
+ *
+ *
+ * Copyright (C) 2003, 2004  Jesús Adolfo García Pasquel
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
+
+package net.sourceforge.ganzua;
+
+
+import com.apple.eawt.*; /* Needed to integrate the program to Mac OS X's
+                            native application environment. */
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.util.prefs.BackingStoreException;
+
+/**
+ * Provides an environment for solving classical (monoalphabetic and
+ * polyalphabetic) ciphers.<br/><br/>
+ *
+ * This <code>Analyzer</code> provides a <code>main(String[])</code>
+ * method that has been modified to integrate the program better to Mac OS X's
+ * application environment. The resulting bytecode may be used on other
+ * platforms as well, but this class requires the classes found in
+ * Apple Java Extensions packages to be compiled.
+ *
+ * @see Analyzer
+ *
+ * @author Jesús Adolfo García Pasquel
+ * @version 0.01 November 2003
+ */
+public class AnalyzerMac extends Analyzer{
+
+    /**
+     * Program that displays an <code>Analyzer</code> in a window with
+     * a menu bar that gives the users access to the
+     * <code>Analyzer</code>'s methods.
+     *
+     * @param args an array of <code>String</code>s that may contain the
+     *             options specified in the method
+     *             <code>parseArguments(String[])</code> (<code>-l</code>,
+     *             <code>-c</code>, <code>-help</code>)
+     * @see Analyzer#parseArguments(String[])
+     */
+    public static void main(String[] args){
+	parseArguments(args);
+	// if in Mac OS, display the menu bar in the appropriate way.
+	if(isSystemMacWithAquaLAF()){
+	    System.setProperty("apple.laf.useScreenMenuBar", "true");
+	}
+	// show a splash screen while the Analyzer is initialized
+	final JFrame splashFrame = new JFrame();
+	splashFrame.getContentPane().add(new JLabel(new ImageIcon(Analyzer.class.getResource("images/ganzuaSp.png"))), BorderLayout.CENTER);
+	splashFrame.setUndecorated(true);
+	splashFrame.pack();
+	splashFrame.setLocationRelativeTo(null);
+	splashFrame.setVisible(true);
+	try{
+	    Thread.sleep(500);
+	}catch(InterruptedException ie){}
+	// initialize a new Analyzer
+	javax.swing.SwingUtilities.invokeLater(new Runnable() {
+		public void run(){
+		    JFrame.setDefaultLookAndFeelDecorated(true);
+		    JDialog.setDefaultLookAndFeelDecorated(true);
+		    final JFrame frame = new JFrame();
+		    final Object macApp = initMacApplication(frame);
+		    final Image icon = (new ImageIcon(Analyzer.class.getResource("images/ganzua128.png"))).getImage();
+		    final Analyzer ana = new Analyzer();
+		    frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		    frame.getContentPane().add(ana);
+		    frame.addWindowListener(new WindowAdapter(){
+			    public void windowClosing(WindowEvent e){
+				try{
+				    savePreferredWindowSettings(ana);
+				}catch(BackingStoreException bse){}
+			    }
+			});
+		    ana.setProjectNameOnFrameTitle((String)null);
+		    ana.addWindowListener();
+		    frame.setJMenuBar(ana.getMenuBar());
+		    if(isSystemMacWithAquaLAF()){
+			addMenuBarToAnalyzerWindows(ana);
+		    }
+		    frame.setIconImage(icon);
+		    setIconImageOfAnalyzerWindows(ana, icon);
+		    frame.pack();
+		    loadPreferredWindowSettings(ana);
+		    splashFrame.setVisible(false); // close the splash screen
+		    splashFrame.dispose(); // and release its resources
+		    frame.setVisible(true);
+		}
+	    });
+    }
+
+    /**
+     * Returns an instance of <code>com.apple.eawt.Application</code> with an
+     * <code>com.apple.eawt.ApplicationListener</code> that handles the 
+     * Quit event. If the underlying operating system is not Mac OS X,
+     * <code>null</code> is returned.
+     *
+     * @param mainWindow a window that when closed, quits the program
+     */
+    private static Object initMacApplication(final Window mainWindow){
+	Object macApp = null;
+	if(isSystemMac()){
+	    macApp = Application.getApplication();
+	    ((Application)macApp).addApplicationListener(new ApplicationAdapter(){
+		    public void handleQuit(ApplicationEvent e){
+			mainWindow.dispatchEvent(new WindowEvent(mainWindow,
+								 WindowEvent.WINDOW_CLOSING));
+		    }
+		});
+	}
+	return macApp;
+    }
+}
+/*
+ * -- AnalyzerMac.java.mac ends here --
+ */

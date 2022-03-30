@@ -1,0 +1,32 @@
+
+                              Ganzúa 1.01
+
+                                CAMBIOS
+
+V 1.01
+~~~~~~
+  Se arreglaron dos problemas relacionados con la fe de erratas de la
+  especificación de los esquemas para XML 1.0 de la W3C, específicamente
+  las entradas E0-21 y E0-28.
+
+  E0-21 cambió la manera en que se obtienen tipos complejos a partir de
+  otros por restricción, por lo que se tuvo que cambiar el esquema
+  Cryptanalysis.xsd.
+
+  E0-28 indica que la sugerencia del atributo schemaLocation debe ser un
+  URI. La versión 1.0 usaba rutas canónicas a los archivos al escribir
+  documentos de frecuencias de lenguajes o de proyectos por lo que se
+  modificaron los archivos LangFreq.java y Analyzer.java.
+
+  Se descubrió que el programa no funciona adecuadamente (no encuentra los
+  esquemas) cuando se instala en una ruta que contiene directorios cuyos
+  nombres incluyen caracteres fuera del alfabeto inglés o 0-9. El problema
+  parece estar relacionado con la implementación de JAXP y el RFC 2396:
+  Uniform Resource Identifiers (URI): Generic Syntax.
+
+  El manual y los archivos de ejemplos se modificaron para reflejar los
+  cambios y mostrar maneras de evitar el problema anterior.
+
+V. 1.0
+~~~~~~
+  Primera versión

@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            targetNamespace="http://ganzua.sourceforge.net/languages"
+            xmlns="http://ganzua.sourceforge.net/languages"
+            elementFormDefault="qualified">
+    <!-- Data type used to represent the names of languages following
+         ISO 639:1988 see:
+         http://ftp.ics.uci.edu/pub/ietf/http/related/iso639.txt -->
+    <xsd:simpleType name="language639">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="aa"/> <!-- Afar -->
+            <xsd:enumeration value="ab"/> <!-- Abkhazian -->
+            <xsd:enumeration value="af"/> <!-- Afrikaans -->
+            <xsd:enumeration value="am"/> <!-- Amharic -->
+            <xsd:enumeration value="ar"/> <!-- Arabic -->
+            <xsd:enumeration value="as"/> <!-- Assamese -->
+            <xsd:enumeration value="ay"/> <!-- Aymara -->
+            <xsd:enumeration value="az"/> <!-- Azerbaijani -->
+
+            <xsd:enumeration value="ba"/> <!-- Bashkir -->
+            <xsd:enumeration value="be"/> <!-- Byelorussian -->
+            <xsd:enumeration value="bg"/> <!-- Bulgarian -->
+            <xsd:enumeration value="bh"/> <!-- Bihari -->
+            <xsd:enumeration value="bi"/> <!-- Bilslama -->
+            <xsd:enumeration value="bn"/> <!-- Bengali; Bangla -->
+            <xsd:enumeration value="bo"/> <!-- Tibetan -->
+            <xsd:enumeration value="br"/> <!-- Breton -->
+
+            <xsd:enumeration value="ca"/> <!-- Catalan -->
+            <xsd:enumeration value="co"/> <!-- Corsican -->
+            <xsd:enumeration value="cs"/> <!-- Czech -->
+            <xsd:enumeration value="cy"/> <!-- Welsh -->
+
+            <xsd:enumeration value="da"/> <!-- Danish -->
+            <xsd:enumeration value="de"/> <!-- German -->
+            <xsd:enumeration value="dz"/> <!-- Bhutani -->
+
+            <xsd:enumeration value="el"/> <!-- Greek -->
+            <xsd:enumeration value="en"/> <!-- English -->
+            <xsd:enumeration value="eo"/> <!-- Esperanto -->
+            <xsd:enumeration value="es"/> <!-- Spanish -->
+            <xsd:enumeration value="et"/> <!-- Estonian -->
+            <xsd:enumeration value="eu"/> <!-- Basque -->
+
+            <xsd:enumeration value="fa"/> <!-- Persian -->
+            <xsd:enumeration value="fi"/> <!-- Finnish -->
+            <xsd:enumeration value="fj"/> <!-- Fiji -->
+            <xsd:enumeration value="fo"/> <!-- Faroese -->
+            <xsd:enumeration value="fr"/> <!-- French -->
+            <xsd:enumeration value="fy"/> <!-- Frisian -->
+
+            <xsd:enumeration value="ga"/> <!-- Irish -->
+            <xsd:enumeration value="gd"/> <!-- Scots Gaelic -->
+            <xsd:enumeration value="gl"/> <!-- Galician -->
+            <xsd:enumeration value="gn"/> <!-- Guarani -->
+            <xsd:enumeration value="gu"/> <!-- Gujarati -->
+
+            <xsd:enumeration value="ha"/> <!-- Hausa -->
+            <xsd:enumeration value="he"/> <!-- Hebrew (formerly 'iw') -->
+            <xsd:enumeration value="iw"/> <!-- Hebrew (replaced by 'he') -->
+            <xsd:enumeration value="hi"/> <!-- Hindi -->
+            <xsd:enumeration value="hr"/> <!-- Croatian -->
+            <xsd:enumeration value="hu"/> <!-- Hungarian -->
+            <xsd:enumeration value="hy"/> <!-- Armenian -->
+
+            <xsd:enumeration value="ia"/> <!-- Interlingua -->
+            <xsd:enumeration value="id"/> <!-- Indonesian (formerly 'in') -->
+            <xsd:enumeration value="in"/> <!-- Indonesian (replaced by 'id')-->
+            <xsd:enumeration value="ie"/> <!-- Interlingue -->
+            <xsd:enumeration value="ik"/> <!-- Inupiak -->
+            <xsd:enumeration value="is"/> <!-- Icelandic -->
+            <xsd:enumeration value="it"/> <!-- Italian -->
+            <xsd:enumeration value="iu"/> <!-- Inuktitut -->
+
+            <xsd:enumeration value="ja"/> <!-- Japanese -->
+            <xsd:enumeration value="jw"/> <!-- Javanese -->
+
+            <xsd:enumeration value="ka"/> <!-- Georgian -->
+            <xsd:enumeration value="kk"/> <!-- Kazakh -->
+            <xsd:enumeration value="kl"/> <!-- Greenlandic -->
+            <xsd:enumeration value="km"/> <!-- Cambodian -->
+            <xsd:enumeration value="kn"/> <!-- Kannada -->
+            <xsd:enumeration value="ko"/> <!-- Korean -->
+            <xsd:enumeration value="ks"/> <!-- Kashmiri -->
+            <xsd:enumeration value="ku"/> <!-- Kurdish -->
+            <xsd:enumeration value="ky"/> <!-- Kirghiz -->
+
+            <xsd:enumeration value="la"/> <!-- Latin -->
+            <xsd:enumeration value="ln"/> <!-- Lingala -->
+            <xsd:enumeration value="lo"/> <!-- Laothian -->
+            <xsd:enumeration value="lt"/> <!-- Lithuanian -->
+            <xsd:enumeration value="lv"/> <!-- Latvian, Lettish -->
+
+            <xsd:enumeration value="mg"/> <!-- Malagasy -->
+            <xsd:enumeration value="mi"/> <!-- Maori -->
+            <xsd:enumeration value="mk"/> <!-- Macedonian -->
+            <xsd:enumeration value="ml"/> <!-- Malayalam -->
+            <xsd:enumeration value="mn"/> <!-- Mongolian -->
+            <xsd:enumeration value="mo"/> <!-- Moldavian -->
+            <xsd:enumeration value="mr"/> <!-- Marathi -->
+            <xsd:enumeration value="ms"/> <!-- Malay -->
+            <xsd:enumeration value="mt"/> <!-- Maltese -->
+            <xsd:enumeration value="my"/> <!-- Burmese -->
+
+            <xsd:enumeration value="na"/> <!-- Nauru -->
+            <xsd:enumeration value="ne"/> <!-- Nepali -->
+            <xsd:enumeration value="nl"/> <!-- Dutch -->
+            <xsd:enumeration value="no"/> <!-- Norwegian -->
+
+            <xsd:enumeration value="oc"/> <!-- Occitan -->
+            <xsd:enumeration value="om"/> <!-- (Afan) Oromo -->
+            <xsd:enumeration value="or"/> <!-- Oriya -->
+
+            <xsd:enumeration value="pa"/> <!-- Punjabi -->
+            <xsd:enumeration value="pl"/> <!-- Polish -->
+            <xsd:enumeration value="ps"/> <!-- Pashto, Pushto -->
+            <xsd:enumeration value="pt"/> <!-- Portuguese -->
+
+            <xsd:enumeration value="qu"/> <!-- Quechua -->
+
+            <xsd:enumeration value="rm"/> <!-- Rhaeto-Romance -->
+            <xsd:enumeration value="rn"/> <!-- Kirundi -->
+            <xsd:enumeration value="ro"/> <!-- Romanian -->
+            <xsd:enumeration value="ru"/> <!-- Russian -->
+            <xsd:enumeration value="rw"/> <!-- Kinyarwanda -->
+
+            <xsd:enumeration value="sa"/> <!-- Sanskrit -->
+            <xsd:enumeration value="sd"/> <!-- Sindhi -->
+            <xsd:enumeration value="sg"/> <!-- Sangho -->
+            <xsd:enumeration value="sh"/> <!-- Serbo-Croatian -->
+            <xsd:enumeration value="si"/> <!-- Sinhalese -->
+            <xsd:enumeration value="sk"/> <!-- Slovak -->
+            <xsd:enumeration value="sl"/> <!-- Slovenian -->
+            <xsd:enumeration value="sm"/> <!-- Samoan -->
+            <xsd:enumeration value="sn"/> <!-- Shona -->
+            <xsd:enumeration value="so"/> <!-- Somali -->
+            <xsd:enumeration value="sq"/> <!-- Albanian -->
+            <xsd:enumeration value="sr"/> <!-- Serbian -->
+            <xsd:enumeration value="ss"/> <!-- Siswati -->
+            <xsd:enumeration value="st"/> <!-- Sesotho -->
+            <xsd:enumeration value="su"/> <!-- Swedish -->
+            <xsd:enumeration value="sv"/> <!-- Swedish -->
+            <xsd:enumeration value="sw"/> <!-- Swahili -->
+
+            <xsd:enumeration value="ta"/> <!-- Tamil -->
+            <xsd:enumeration value="te"/> <!-- Telugu -->
+            <xsd:enumeration value="tg"/> <!-- Tajik -->
+            <xsd:enumeration value="th"/> <!-- Thai -->
+            <xsd:enumeration value="ti"/> <!-- Tigrinya -->
+            <xsd:enumeration value="tk"/> <!-- Turkmen -->
+            <xsd:enumeration value="tl"/> <!-- Tagalog -->
+            <xsd:enumeration value="tn"/> <!-- Setswana -->
+            <xsd:enumeration value="to"/> <!-- Tonga -->
+            <xsd:enumeration value="tr"/> <!-- Turkish -->
+            <xsd:enumeration value="ts"/> <!-- Tsonga -->
+            <xsd:enumeration value="tt"/> <!-- Tatar -->
+            <xsd:enumeration value="tw"/> <!-- Twi -->
+
+            <xsd:enumeration value="ug"/> <!-- Uighur -->
+            <xsd:enumeration value="uk"/> <!-- Ukrainian -->
+            <xsd:enumeration value="ur"/> <!-- Urdu -->
+            <xsd:enumeration value="uz"/> <!-- Uzbek -->
+
+            <xsd:enumeration value="vi"/> <!-- Vietnamese -->
+            <xsd:enumeration value="vo"/> <!-- Volapuk -->
+
+            <xsd:enumeration value="wo"/> <!-- Wolof -->
+
+            <xsd:enumeration value="xh"/> <!-- Xhosa -->
+
+            <xsd:enumeration value="yi"/> <!-- Yiddish (formerly 'ji') -->
+            <xsd:enumeration value="ji"/> <!-- Yiddish (replaced by 'yi') -->
+            <xsd:enumeration value="yo"/> <!-- Yoruba -->
+
+            <xsd:enumeration value="za"/> <!-- Zhuang -->
+            <xsd:enumeration value="zh"/> <!-- Chinese -->
+            <xsd:enumeration value="zu"/> <!-- Zulu -->
+        </xsd:restriction>
+    </xsd:simpleType>
+</xsd:schema>
+

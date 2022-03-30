@@ -1,0 +1,29 @@
+
+                              Ganzúa 1.01
+
+                                CHANGES
+
+V 1.01
+~~~~~~
+  Fixed two problems related to the XML Schema 1.0 Specification Errata,
+  specifically with errata E0-21 and E0-28.
+
+  E0-21 changed how complex types are derived by restriction, so the schema
+  Cryptanalysis.xsd had to be changed.
+
+  E0-28 specifies that the hint in the schemaLocation attribute must be a
+  URI. Version 1.0 used a canonical path when writing language frequencies
+  and project documents, so LangFreq.java and Analyzer.java were changed.
+
+  It was found that the program does not work properly (can not find the
+  schemata) when installed in a path that contains a directory with
+  characters outside the English alphabet or 0-9. The problem seems to be
+  in the implementation of JAXP and to be related to the RFC 2396: Uniform
+  Resource Identifiers (URI): Generic Syntax.
+
+  The manual and example files were modified to reflect the changes and
+  provide a workaround to the problem.
+
+V. 1.0
+~~~~~~
+  First version

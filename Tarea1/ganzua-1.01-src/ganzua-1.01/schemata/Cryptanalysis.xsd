@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://ganzua.sourceforge.net/cryptanalysis"
+            xmlns="http://ganzua.sourceforge.net/cryptanalysis"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:lang="http://ganzua.sourceforge.net/languages"
+            xmlns:cntry="http://ganzua.sourceforge.net/countries"
+            elementFormDefault="qualified">
+
+ <xsd:import namespace="http://ganzua.sourceforge.net/languages"
+             schemaLocation="Languages639.xsd"/>
+ <xsd:import namespace="http://ganzua.sourceforge.net/countries"
+             schemaLocation="Countries3166.xsd"/>
+
+ <xsd:element name="cryptanalysis">
+  <xsd:complexType>
+   <xsd:sequence>
+    <xsd:element name="ciphertext" type="xsd:string" />
+    <xsd:element name="cipherAlphabet" type="CharSeq_Min0" />
+    <xsd:element name="plainAlphabet" type="CharSeq_Min0" />
+    <xsd:element name="substitution" type="Substitution" />
+    <xsd:element name="languageFrequencies" type="LanguageFrequencies"
+                 minOccurs="0" />
+   </xsd:sequence>
+   <xsd:attribute name="cipher" type="Cipher" use="required"/>
+   <xsd:attribute name="language" type="lang:language639" use="required"/>
+   <xsd:attribute name="country" type="cntry:countries3166" />
+  </xsd:complexType>
+ </xsd:element>
+
+ <xsd:complexType name="CharSeq_Min0">
+  <xsd:sequence>
+   <xsd:element name="character" minOccurs="0" maxOccurs="unbounded">
+    <xsd:complexType>
+     <xsd:complexContent>
+      <xsd:restriction base="xsd:anyType">
+       <xsd:attribute name="char" type="xsd:string" use="required"/>
+      </xsd:restriction>
+     </xsd:complexContent>
+    </xsd:complexType>
+   </xsd:element>
+  </xsd:sequence>
+ </xsd:complexType>
+
+ <xsd:complexType name="CharSeq_Min1">
+  <xsd:sequence>
+   <xsd:element name="character" minOccurs="1" maxOccurs="unbounded">
+    <xsd:complexType>
+     <xsd:complexContent>
+      <xsd:restriction base="xsd:anyType">
+       <xsd:attribute name="char" type="xsd:string" use="required"/>
+      </xsd:restriction>
+     </xsd:complexContent>
+    </xsd:complexType>
+   </xsd:element>
+  </xsd:sequence>
+ </xsd:complexType>
+
+ <xsd:complexType name="Substitution">
+  <xsd:sequence>
+   <xsd:element name="ignore" type="CharSeq_Min1"
+                minOccurs="0" />
+   <xsd:element name="alphabet" maxOccurs="unbounded">
+    <xsd:complexType>
+     <xsd:sequence>
+      <xsd:element name="replace" type="ReplaceSeq"
+                   minOccurs="0" />
+     </xsd:sequence>
+    </xsd:complexType>
+   </xsd:element>
+  </xsd:sequence>
+ </xsd:complexType>
+
+ <xsd:complexType name="ReplaceSeq">
+  <xsd:sequence>
+   <xsd:element name="occurrences" maxOccurs="unbounded">
+    <xsd:complexType>
+     <xsd:complexContent>
+      <xsd:restriction base="xsd:anyType">
+       <xsd:attribute name="ofChar" type="xsd:string" use="required"/>
+       <xsd:attribute name="byChar" type="xsd:string" use="required"/>
+      </xsd:restriction>
+     </xsd:complexContent>
+    </xsd:complexType>
+   </xsd:element>
+  </xsd:sequence>
+ </xsd:complexType>
+
+ <xsd:simpleType name="Cipher">
+  <xsd:restriction base="xsd:string">
+   <xsd:enumeration value="Caesar" />
+   <xsd:enumeration value="Monoalphabetic" />
+   <xsd:enumeration value="Vigen&#232;re" />
+   <xsd:enumeration value="Alberti" />
+  </xsd:restriction>
+ </xsd:simpleType>
+
+ <xsd:complexType name="LanguageFrequencies">
+  <xsd:sequence>
+    <xsd:element name="alphabet" type="CharFreqSeq" />
+    <xsd:element name="bigrams" type="BigramFreqSeq" />
+    <xsd:element name="trigrams" type="TrigramFreqSeq" />
+  </xsd:sequence>
+   <xsd:attribute name="language" type="lang:language639" use="required"/>
+   <xsd:attribute name="country" type="cntry:countries3166" />
+   <xsd:attribute name="source" type="xsd:string" use="required" />
+   <xsd:attribute name="rules" type="xsd:string" use="required" />
+ </xsd:complexType>
+
+ <xsd:complexType name="CharFreqSeq">
+  <xsd:sequence>
+   <xsd:element name="character" maxOccurs="unbounded">
+    <xsd:complexType>
+     <xsd:complexContent>
+      <xsd:restriction base="xsd:anyType">
+       <xsd:attribute name="char" type="xsd:string" use="required" />
+       <xsd:attribute name="frequency" type="nonNegativeJavaInteger" use="required" />
+      </xsd:restriction>
+     </xsd:complexContent>
+    </xsd:complexType>
+   </xsd:element>
+  </xsd:sequence>
+ </xsd:complexType>
+
+ <xsd:complexType name="BigramFreqSeq">
+  <xsd:sequence>
+   <xsd:element name="bigram" maxOccurs="unbounded">
+    <xsd:complexType>
+     <xsd:complexContent>
+      <xsd:restriction base="xsd:anyType">
+       <xsd:attribute name="sequence" type="xsd:string" use="required" />
+       <xsd:attribute name="frequency" type="nonNegativeJavaInteger" use="required" />
+      </xsd:restriction>
+     </xsd:complexContent>
+    </xsd:complexType>
+   </xsd:element>
+  </xsd:sequence>
+ </xsd:complexType>
+
+ <xsd:complexType name="TrigramFreqSeq">
+  <xsd:sequence>
+   <xsd:element name="trigram" maxOccurs="unbounded">
+    <xsd:complexType>
+     <xsd:complexContent>
+      <xsd:restriction base="xsd:anyType">
+       <xsd:attribute name="sequence" type="xsd:string" use="required" />
+       <xsd:attribute name="frequency" type="nonNegativeJavaInteger" use="required" />
+      </xsd:restriction>
+     </xsd:complexContent>
+    </xsd:complexType>
+   </xsd:element>
+  </xsd:sequence>
+ </xsd:complexType>
+
+ <xsd:simpleType name="nonNegativeJavaInteger">
+  <xsd:restriction base="xsd:nonNegativeInteger">
+   <!-- set maximum to the value of java.lang.Integer.MAX_VALUE -->
+   <xsd:maxInclusive value="2147483647" />
+  </xsd:restriction>
+ </xsd:simpleType>
+
+</xsd:schema>
