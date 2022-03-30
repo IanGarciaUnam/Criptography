@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://ganzua.sourceforge.net/rules"
+            xmlns="http://ganzua.sourceforge.net/rules"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:lang="http://ganzua.sourceforge.net/languages"
+            xmlns:cntry="http://ganzua.sourceforge.net/countries"
+            elementFormDefault="qualified">
+ <xsd:import namespace="http://ganzua.sourceforge.net/languages"
+             schemaLocation="Languages639.xsd"/>
+ <xsd:import namespace="http://ganzua.sourceforge.net/countries"
+             schemaLocation="Countries3166.xsd"/>
+
+ <xsd:element name="alphabetRules">
+  <xsd:complexType>
+   <xsd:sequence>
+    <xsd:choice>
+     <xsd:element name="includeExclusively" type="CharSeq" minOccurs="0"/>
+     <xsd:group ref="IncludeIgnore" minOccurs="0"/>
+    </xsd:choice>
+    <xsd:element name="replace" minOccurs="0">
+     <xsd:complexType>
+      <xsd:sequence>
+       <xsd:element name="occurrences" maxOccurs="unbounded">
+        <xsd:complexType>
+         <xsd:complexContent>
+          <xsd:restriction base="xsd:anyType">
+           <xsd:attribute name="ofChar" type="xsd:string" use="required"/>
+           <xsd:attribute name="byChar" type="xsd:string" use="required"/>
+          </xsd:restriction>
+         </xsd:complexContent>
+        </xsd:complexType>
+       </xsd:element>
+      </xsd:sequence>
+     </xsd:complexType>
+    </xsd:element>
+   </xsd:sequence>
+   <xsd:attribute name="language" type="lang:language639" use="required"/>
+   <xsd:attribute name="country" type="cntry:countries3166" />
+   <xsd:attribute name="source" type="xsd:string" use="required"/>
+   <xsd:attribute name="sourceEncoding" type="xsd:string" use="required"/>
+  </xsd:complexType>
+ </xsd:element>
+
+ <xsd:group name="IncludeIgnore">
+  <xsd:sequence>
+   <xsd:element name="include" type="CharSeq" minOccurs="0"/>
+   <xsd:element name="ignore" type="CharSeq" minOccurs="0"/>
+  </xsd:sequence>
+ </xsd:group>
+
+ <xsd:complexType name="CharSeq">
+  <xsd:sequence>
+   <xsd:element name="character" maxOccurs="unbounded">
+    <xsd:complexType>
+     <xsd:complexContent>
+      <xsd:restriction base="xsd:anyType">
+       <xsd:attribute name="char" type="xsd:string" use="required"/>
+      </xsd:restriction>
+     </xsd:complexContent>
+    </xsd:complexType>
+   </xsd:element>
+  </xsd:sequence>
+ </xsd:complexType>
+
+</xsd:schema>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<alphabetRules xmlns="http://ganzua.sourceforge.net/rules"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:schemaLocation="http://ganzua.sourceforge.net/rules
+                                   ../schemata/AlphabetRules.xsd"
+               language="es" country="ES"
+               source="/home/user/examples/es/2donq10.txt"
+               sourceEncoding="ISO-8859-15">
+ <includeExclusively>
+  <character char="a" />
+  <character char="b" />
+  <character char="c" />
+  <character char="d" />
+  <character char="e" />
+  <character char="f" />
+  <character char="g" />
+  <character char="h" />
+  <character char="i" />
+  <character char="j" />
+  <character char="k" />
+  <character char="l" />
+  <character char="m" />
+  <character char="n" />
+  <character char="ñ" />
+  <character char="o" />
+  <character char="p" />
+  <character char="q" />
+  <character char="r" />
+  <character char="s" />
+  <character char="t" />
+  <character char="u" />
+  <character char="v" />
+  <character char="w" />
+  <character char="x" />
+  <character char="y" />
+  <character char="z" />
+ </includeExclusively>
+ <replace>
+  <occurrences ofChar="á" byChar="a" />
+  <occurrences ofChar="à" byChar="a" />
+  <occurrences ofChar="é" byChar="e" />
+  <occurrences ofChar="í" byChar="i" />
+  <occurrences ofChar="ï" byChar="i" />
+  <occurrences ofChar="ó" byChar="o" />
+  <occurrences ofChar="ú" byChar="u" />
+  <occurrences ofChar="ù" byChar="u" />
+  <occurrences ofChar="ü" byChar="u" />
+  <occurrences ofChar="A" byChar="a" />
+  <occurrences ofChar="Á" byChar="a" />
+  <occurrences ofChar="B" byChar="b" />
+  <occurrences ofChar="C" byChar="c" />
+  <occurrences ofChar="D" byChar="d" />
+  <occurrences ofChar="E" byChar="e" />
+  <occurrences ofChar="É" byChar="e" />
+  <occurrences ofChar="F" byChar="f" />
+  <occurrences ofChar="G" byChar="g" />
+  <occurrences ofChar="H" byChar="h" />
+  <occurrences ofChar="I" byChar="i" />
+  <occurrences ofChar="Í" byChar="i" />
+  <occurrences ofChar="J" byChar="j" />
+  <occurrences ofChar="K" byChar="k" />
+  <occurrences ofChar="L" byChar="l" />
+  <occurrences ofChar="M" byChar="m" />
+  <occurrences ofChar="N" byChar="n" />
+  <occurrences ofChar="Ñ" byChar="ñ" />
+  <occurrences ofChar="O" byChar="o" />
+  <occurrences ofChar="Ó" byChar="o" />
+  <occurrences ofChar="P" byChar="p" />
+  <occurrences ofChar="Q" byChar="q" />
+  <occurrences ofChar="R" byChar="r" />
+  <occurrences ofChar="S" byChar="s" />
+  <occurrences ofChar="T" byChar="t" />
+  <occurrences ofChar="U" byChar="u" />
+  <occurrences ofChar="Ú" byChar="u" />
+  <occurrences ofChar="Ü" byChar="u" />
+  <occurrences ofChar="V" byChar="v" />
+  <occurrences ofChar="W" byChar="w" />
+  <occurrences ofChar="X" byChar="x" />
+  <occurrences ofChar="Y" byChar="y" />
+  <occurrences ofChar="Z" byChar="z" />
+ </replace>
+</alphabetRules>

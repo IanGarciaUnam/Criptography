@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<project name="Ganzúa" default="all" basedir=".">
+
+ <description>Buildfile for the cryptanalysis programs.
+  Leaves the classfiles in the directories their sources
+  are.</description>
+
+ <property name="src" value="." />
+
+ <target name="all"
+         description="Generates the bytecode">
+  <javac srcdir="${src}" destdir="${src}" encoding="UTF-8" source="1.4" 
+         debug="on" debuglevel="lines,vars,source" />
+ </target>
+
+ <target name="docs"
+         description="Generates the project's documentation using the javadoc tool">
+  <javadoc sourcepath="${src}" source="1.4" encoding="UTF-8" charset="UTF-8"
+           docencoding="UTF-8" destdir="../docs"
+           additionalparam="-breakiterator"
+           author="true" version="true" private="true" >
+   <fileset dir="${src}">
+    <include name="**/*.java" />
+   </fileset>
+  </javadoc>
+  <echo>Documentation written to: ../docs/ </echo>
+ </target>
+
+ <target name="clean"
+         description="Deletes all the classfiles.">
+  <delete verbose="true">
+   <fileset dir="${src}" defaultexcludes="false">
+    <include name="**/*.class" />
+    <include name="**/*.*~" />
+   </fileset>
+  </delete>
+ </target>
+
+</project>
